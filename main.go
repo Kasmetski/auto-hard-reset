@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"time"
 
 	"gobot.io/x/gobot"
@@ -9,38 +9,34 @@ import (
 	"gobot.io/x/gobot/platforms/raspi"
 )
 
-var miningRigs [5]string
-
 func main() {
-	miningRigs[0] = "192.168.0.111"
-
 	r := raspi.NewAdaptor()
-	//led := gpio.NewLedDriver(r, "7")
-	relay := gpio.NewRelayDriver(r, "7")
+	//store the info in miningRigs map | using empty ip for testing purpose
+	//ToDo: config file
+	miningRigs := make(map[string]Rig)
+	miningRigs["rig1"] = Rig{"machine 1", gpio.NewRelayDriver(r, "38"), "192.168.0.111", "6 x RX480"}
+	miningRigs["rig2"] = Rig{"machine 2", gpio.NewRelayDriver(r, "40"), "192.168.0.111", "6 x RX470"}
+
 	work := func() {
+		log.Println("Starting timer")
+		//Check the machines every 10 minutes
 		gobot.Every(10*time.Minute, func() {
-			fmt.Println("LED TOGGGLEEE")
-			if !Ping(miningRigs[0]) {
-				relay.Off()
-				time.Sleep(5 * time.Second)
-				relay.On()
-				time.Sleep(3 * time.Second)
-				relay.Off()
-				time.Sleep(1 * time.Second)
-				relay.On()
+			log.Println("Checking machines: ")
+			for key, value := range miningRigs {
+				log.Println("Ping miner: ", key, " ip: ", value.ip)
+				if !Ping(value.ip) {
+					Restarter(miningRigs[key])
+				}
 			}
+
 		})
 	}
-
-	// result := Ping(miningRigs[1])
-	// fmt.Println(result)
 	robot := gobot.NewRobot("RPiMinerHardReset",
 		[]gobot.Connection{r},
-		[]gobot.Device{relay},
+		[]gobot.Device{miningRigs["rig1"].pin},
+		[]gobot.Device{miningRigs["rig2"].pin},
 		work,
 	)
 
 	robot.Start()
 }
-
-//Restarter -

@@ -1,6 +1,6 @@
 # RPi Miner Hard-reset
 Simple Go program for hard-reset computer with GPIO
-
+#### Still in progress
 First commit is the prototype. I'm using 5V relay and checking the miners with ping command. If there is no answer - hard-reset with the cables.
 
 ### Logic
