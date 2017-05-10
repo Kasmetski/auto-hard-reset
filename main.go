@@ -25,7 +25,7 @@ func main() {
 		log.Println("# Starting timer")
 
 		//Check the machines every 10 minutes
-		gobot.Every(10*time.Second, func() {
+		gobot.Every(10*time.Minute, func() {
 			//logging
 			t := time.Now().String()
 			fname := fmt.Sprintf("./auto-hard-reset-log-%s.txt", t[:9])
