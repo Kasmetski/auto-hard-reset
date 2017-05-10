@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"gobot.io/x/gobot"
@@ -16,25 +18,35 @@ func main() {
 	//ToDo: config file
 	miningRigs := make(map[string]Rig)
 
-	miningRigs["rig1"] = Rig{"machine 1", gpio.NewRelayDriver(r, "38"), "192.168.0.100", "R9 290's"}
-	miningRigs["rig2"] = Rig{"machine 2", gpio.NewRelayDriver(r, "40"), "192.168.0.111", "RX480's"}
+	miningRigs["rig1"] = Rig{"machine 1", gpio.NewRelayDriver(r, "38"), "192.168.0.3", "R9 290's"}
+	miningRigs["rig2"] = Rig{"machine 2", gpio.NewRelayDriver(r, "40"), "192.168.0.4", "RX480's"}
 
 	work := func() {
 		log.Println("# Starting timer")
 
 		//Check the machines every 10 minutes
-		gobot.Every(10*time.Minute, func() {
+		gobot.Every(10*time.Second, func() {
+			//logging
+			t := time.Now().String()
+			fname := fmt.Sprintf("./auto-hard-reset-log-%s.txt", t[:9])
+
+			file, err := os.OpenFile(fname, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0664)
+			if err != nil {
+				return
+			}
+			defer file.Close()
+
+			log.SetOutput(file)
 			log.Println("# Checking machines: ")
 
 			for key, value := range miningRigs {
-				log.Println("# Ping miner: ", key, " ip: ", value.ip)
+				fmt.Println("# Ping miner: ", key, " ip: ", value.ip)
 				if !Ping(value.ip) {
-					log.Println("### HOST NOT FOUND - ", value.name)
+					log.Println("##### HOST NOT FOUND - ", value.name)
 					Restarter(miningRigs[key])
-				} else {
-					log.Println("# HOST IS ONLINE - ", value.name)
 				}
 			}
+
 			log.Println("# Checking machines DONE")
 			log.Println("# Starting timer")
 		})

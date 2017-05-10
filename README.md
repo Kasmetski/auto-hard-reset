@@ -14,3 +14,4 @@ First commit is the prototype. I'm using 5V relay and checking the miners with p
 * JSON check/
 * log file
 * instructions
+* statistics
