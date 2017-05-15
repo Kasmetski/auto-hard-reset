@@ -7,11 +7,31 @@ First commit is the prototype. I'm using 5V relay and checking the miners with p
 
 ### Logic
  * Ping miners every 10 minutes
- * if offline > send signal for 5 sec, pause 3 sec and send signal again for 1 second
+ * if offline > send signal for 5 sec, pause 5 sec and send signal again for 0.108 second
+
+### How-to
+
+There is still no config files (searching a good solution for Go). Machines are stored in maps `miningRigs[key]` with `Rig` struct looking like this
+
+```
+type Rig struct {
+	name string
+	pin  *gpio.RelayDriver
+	ip   string
+	info string
+}
+```
+
+To add new machines open `main.go`, edit the examples and add more if you need.
+```
+miningRigs["rig1"] = &Rig{"machine 1", gpio.NewRelayDriver(r, "38"), "192.168.0.100", "R9 290's"}
+```
+```
+miningRigs["KEY-NAME"] = &Rig{"NAME", gpio.NewRelayDriver(r, "PIN-NUMBER OF RASPBERRY PY"), "LOCAL IP ADDRESS", "ADDITIONAL INFO"}
+```
 
 ### ToDo
 * Config file for all miners
 * JSON check/
-* log file
 * instructions
 * statistics
