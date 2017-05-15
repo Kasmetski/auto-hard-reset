@@ -18,8 +18,8 @@ type Rig struct {
 }
 
 //Ping the IP from Linux shell
-func Ping(ip string) bool {
-	out, _ := exec.Command("ping", ip, "-c 3", "-i 3", "-w 10").Output()
+func (r *Rig) Ping() bool {
+	out, _ := exec.Command("ping", r.ip, "-c 3", "-i 3", "-w 10").Output()
 	if strings.Contains(string(out), "Host Unreachable") {
 		return false
 	}
@@ -27,23 +27,23 @@ func Ping(ip string) bool {
 }
 
 //ForceShutDown machine
-func ForceShutDown(r Rig) {
+func (r *Rig) ForceShutDown() {
 	r.pin.Off()
 	time.Sleep(5 * time.Second)
 	r.pin.On()
 }
 
 //TurnOn machine
-func TurnOn(r Rig) {
+func (r *Rig) TurnOn() {
 	r.pin.Off()
-	time.Sleep(1 * time.Second)
+	time.Sleep(108 * time.Millisecond)
 	r.pin.On()
 }
 
 //Restarter function logic
-func Restarter(r Rig) {
+func (r *Rig) Restarter() {
 	log.Println("### Restarting ", r.name)
-	ForceShutDown(r)
-	time.Sleep(3 * time.Second)
-	TurnOn(r)
+	r.ForceShutDown()
+	time.Sleep(5 * time.Second)
+	r.TurnOn()
 }
