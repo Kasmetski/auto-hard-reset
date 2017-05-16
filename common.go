@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 	"time"
@@ -46,4 +48,17 @@ func (r *Rig) Restarter() {
 	r.ForceShutDown()
 	time.Sleep(5 * time.Second)
 	r.TurnOn()
+}
+
+//LogMachines -
+func LogMachines() {
+	t := time.Now().String()
+	fname := fmt.Sprintf("./auto-hard-reset-log-%s.txt", t[:10])
+
+	file, err := os.OpenFile(fname, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0664)
+	if err != nil {
+		return
+	}
+	//defer file.Close()
+	log.SetOutput(file)
 }
