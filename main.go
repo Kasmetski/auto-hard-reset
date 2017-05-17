@@ -14,6 +14,7 @@ func main() {
 	r := raspi.NewAdaptor()
 
 	///MINING RIGS CONFIGURATION///
+
 	var miningRigs [12]Rig //number of machines
 
 	//EXAMPLE

@@ -19,7 +19,7 @@ type Rig struct {
 	info string
 }
 
-//Ping the IP from Linux shell
+//Ping IP from Linux shell
 func (r *Rig) Ping() bool {
 	out, _ := exec.Command("ping", r.ip, "-c 3", "-i 3", "-w 10").Output()
 	if strings.Contains(string(out), "Host Unreachable") {
@@ -50,7 +50,7 @@ func (r *Rig) Restarter() {
 	r.TurnOn()
 }
 
-//LogMachines -
+//LogMachines - function for basic logging the output from log.func()
 func LogMachines() {
 	t := time.Now().String()
 	fname := fmt.Sprintf("./auto-hard-reset-log-%s.txt", t[:10])
