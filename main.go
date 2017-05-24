@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"time"
 
 	"gobot.io/x/gobot"
@@ -14,7 +12,6 @@ func main() {
 	r := raspi.NewAdaptor()
 
 	///MINING RIGS CONFIGURATION///
-
 	var miningRigs [12]Rig //number of machines
 
 	//EXAMPLE
@@ -33,25 +30,25 @@ func main() {
 	miningRigs[11] = Rig{"machine 12", gpio.NewRelayDriver(r, "16"), "192.168.0.111", "RX480's"}
 	///END OF MINING RIG CONFIGURATION///
 
-	work := func() {
-		log.Println("# Starting timer")
-		//Check the machines every 10 minutes
-		gobot.Every(33*time.Minute, func() {
-			//logging
-			LogMachines()
+	LogMachines()
 
-			//check machines
-			log.Println("# Checking machines: ")
+	work := func() {
+		timer := 33 * time.Minute
+		log.Notice("HELLO! I WILL KEEP YOUR MONEY MAKING MACHINES ONLINE!")
+		log.Notice("Starting timer: ", timer)
+
+		//Check the machines every 33 minutes
+		gobot.Every(timer, func() {
+			log.Notice("Checking machines: ")
 			for i := 0; i < len(miningRigs); i++ {
-				fmt.Println("# Ping miner: ", i, " ip: ", miningRigs[i].ip)
+				log.Notice("Ping miner: ", i, "name: ", miningRigs[i].name, "ip: ", miningRigs[i].ip)
 				if !miningRigs[i].Ping() {
-					log.Println("##### HOST NOT FOUND - ", miningRigs[i].name)
 					miningRigs[i].Restarter()
 				}
 			}
 
-			log.Println("# Checking machines DONE")
-			log.Println("# Restarting timer")
+			log.Notice("Checking machines DONE")
+			log.Notice("Restarting timer")
 		})
 	}
 
@@ -70,7 +67,7 @@ func main() {
 		[]gobot.Device{miningRigs[10].pin},
 		[]gobot.Device{miningRigs[11].pin},
 		//IF YOU ADD MORE MACHINES ADD INFO HERE
-		//[]gobot.Device{miningRigs[3].pin},
+		//[]gobot.Device{miningRigs[12].pin},
 		work,
 	)
 
