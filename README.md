@@ -1,9 +1,13 @@
-# RPi Miner auto-hard-reset
+# RPi miner auto-hard-reset
 Simple Go program for auto-hard-reset computer with Raspberry Pi or other mini-computer
 #### Still in progress
 ![console](screenshot.png)
 
 First commit is the prototype. I'm using 5V relay and checking the miners with ping command. If there is no answer - hard-reset with the GPIO.
+
+### Requirements
+* Raspberry Pi
+* Golang >= 1.8.0
 
 ### Logic
  * Ping miners every 33 minutes

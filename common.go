@@ -12,8 +12,6 @@ import (
 	"gobot.io/x/gobot/drivers/gpio"
 )
 
-var log = logging.MustGetLogger("aut-hard-reset-log")
-
 //Rig structure
 type Rig struct {
 	name string
@@ -69,8 +67,8 @@ func LogMachines() {
 	//defer f.Close()
 
 	b1format := logging.MustStringFormatter(`%{time:2006-01-02-15:04:05.000} ▶ %{level:.5s} %{id:03x} ▶ %{message}`)
-	b2format := logging.MustStringFormatter(
-		`%{color}%{time:15:04:05.000} ▶ %{level:.5s} %{id:03x} ▶ %{color:reset} %{message}`)
+	b2format := logging.MustStringFormatter(`%{color}%{time:15:04:05.000} ▶ %{level:.5s} %{id:03x} ▶ %{color:reset} %{message}`)
+
 	b1 := logging.NewLogBackend(f, "", 0)
 	b2 := logging.NewLogBackend(os.Stderr, "", 0)
 
