@@ -17,6 +17,9 @@ First commit is the prototype. I'm using 5V relay and checking the miners with p
 I'm using Raspberry Pi with 5V relay. Soon I will add detailed instruction but this is the basics.
 ![console](raspberrypi-5v-relay.jpeg)
 Soon simple configuration and binary files.
+
+Use  `go get -u -v github.com/kasmetski/auto-hard-reset` instead of `git clone`
+
 Machines are stored in an array `miningRigs[]`
 
 To add new machines open `main.go`, edit the examples and delete the unnecessary ones.
