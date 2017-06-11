@@ -10,44 +10,26 @@ First commit is the prototype. I'm using 5V relay and checking the miners with p
 * Golang >= 1.8.0
 
 ### Logic
- * Ping miners every 33 minutes
+ * Ping miners at most every 30 minutes (the period is configurable).
  * if offline > send signal for 5 sec (turn off pc), pause 5 sec(wait) and send signal again for 0.108 second (turn on pc)
 
 ### How-to
 I'm using Raspberry Pi with 5V relay. Soon I will add detailed instruction but this is the basics.
 ![console](raspberrypi-5v-relay.jpeg)
-Soon simple configuration and binary files.
+Soon binary files.
 
 Use  `go get -u -v github.com/kasmetski/auto-hard-reset` instead of `git clone`
 
-Machines are stored in an array `miningRigs[]`
-
-To add new machines open `main.go`, edit the examples and delete the unnecessary ones.
-First write how many machines you will control
+Configuration for this program is stored in file config.json .
+Example config.json:
 ```
-	var miningRigs [12]Rig //number of machines
-```
-After that add/edit the machines like that
-```
-miningRigs[0] = Rig{"machine 1", gpio.NewRelayDriver(r, "38"), "192.168.0.100", "R9 290's"}
-```
-
-```
-miningRigs[num] = Rig{"NAME", gpio.NewRelayDriver(r, "PIN-NUMBER OF RASPBERRY PI"), "LOCAL IP ADDRESS", "ADDITIONAL INFO"}
-```
-
-and in the end add the new machines or delete unnecessary in the last function
-
-```
-robot := gobot.NewRobot("RPiMinerHardReset",
-		[]gobot.Connection{r},
-		[]gobot.Device{miningRigs[0].pin},
-		[]gobot.Device{miningRigs[1].pin},
-		[]gobot.Device{miningRigs[2].pin},
-		[]gobot.Device{miningRigs[3].pin},
-		[]gobot.Device{miningRigs[4].pin},
-        .....
-        and so on
+{
+    "WaitSeconds": 1800,
+    "Miners": [
+        {   "Name": "machine 1", "Pin": "40", "Ip": "192.168.0.100", "Info": "R9 290's"  },
+        {   "Name": "machine 2", "Pin": "38", "Ip": "192.168.0.101", "Info": "RX480's"   }
+    ]
+}
 ```
 
 ### Build
@@ -56,7 +38,6 @@ If you are building on your workstation type `GOARM=6(or 7) GOARCH=arm GOOS=linu
 ##### GOARM=6 (Raspberry Pi A, A+, B, B+, Zero) GOARM=7 (Raspberry Pi 2, 3)
 
 ### ToDo
-* conf.file
 * web interface
 * JSON-check
 * instructions
