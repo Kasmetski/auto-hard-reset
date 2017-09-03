@@ -16,8 +16,9 @@ type MinerConfig struct {
 
 //ConfigurationFile struct to parse config.json
 type ConfigurationFile struct {
-	WaitSeconds int           // Period of the timer checks in seconds
-	Miners      []MinerConfig // An array of the
+	WaitSeconds  int           // Period of the timer checks in seconds
+	StartupCheck bool          // Check miners on startup
+	Miners       []MinerConfig // An array of the
 }
 
 //ReadConfig - read and parse the config file

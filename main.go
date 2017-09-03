@@ -31,7 +31,9 @@ func main() {
 		log.Notice("HELLO! I WILL KEEP YOUR MINING RIGS ONLINE!")
 
 		//Check machines on startup without waiting the timer. Use with caution. After a power failure, RPI could be ready faster than your machines and start restarting them without need.
-		//CheckMachines(miningRigs)
+		if configFile.StartupCheck {
+			CheckMachines(miningRigs)
+		}
 
 		timer := time.Duration(configFile.WaitSeconds) * time.Second
 		log.Notice("Starting timer: ", timer)
