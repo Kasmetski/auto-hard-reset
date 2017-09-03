@@ -24,7 +24,9 @@ func main() {
 	log.Notice("Configured rigs: ", len(miningRigs))
 
 	//Logging machines in two outputs - console & external file
-	LogMachines()
+	if configFile.Log {
+		LogMachines()
+	}
 
 	//Gobot work func
 	work := func() {

@@ -18,6 +18,7 @@ type MinerConfig struct {
 type ConfigurationFile struct {
 	WaitSeconds  int           // Period of the timer checks in seconds
 	StartupCheck bool          // Check miners on startup
+	Log          bool          //Enable or disable logging
 	Miners       []MinerConfig // An array of the
 }
 
