@@ -2,7 +2,7 @@
 Simple Go program for automatically hard reset a computer with Raspberry Pi or other mini-computer from the GPIO pins
 #### Still in progress
 
-![console](screenshot.png)
+![console](docs/screenshot.png)
 
 I'm using 5V relay and checking the miners with ping command. If there is no answer - hard-reset with the GPIO pins.
 
@@ -13,7 +13,7 @@ I'm using 5V relay and checking the miners with ping command. If there is no ans
 ### How-to
 I'm using Raspberry Pi with 5V relay. Soon I will add detailed instruction but you can find a lot of information how to use 5v relay with Raspberry Pi. This is the basics.
 
-![console](raspberrypi-5v-relay.jpeg)
+![console](docs/raspberrypi-5v-relay.jpeg)
 
 Depending of your Raspberry Pi version, download one of the archives
 `arm6` - (Raspberry Pi A, A+, B, B+, Zero)
@@ -34,7 +34,9 @@ Configuration for this program is stored in file config.json .
 Example config.json:
 ```
 {
-    "WaitSeconds": 1800,
+    "WaitSeconds": 1800, //time in seconds 
+    "StartupCheck" : true, //check miners on program startup
+    "Log" : true, //If you want output log - true
     "Miners": [
         {   "Name": "machine 1", "Pin": "40", "Ip": "192.168.0.100", "Info": "R9 290's"  },
         {   "Name": "machine 2", "Pin": "38", "Ip": "192.168.0.101", "Info": "RX480's"   }

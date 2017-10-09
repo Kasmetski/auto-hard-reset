@@ -12,11 +12,11 @@ func main() {
 	r := raspi.NewAdaptor()
 
 	//Read configuration file
-	configFile := ReadConfig()
+	Config = ReadConfig()
 
 	//parse machines to []Rig struct
 	miningRigs := make([]Rig, 0)
-	for _, m := range configFile.Miners {
+	for _, m := range Config.Miners {
 		log.Notice("minerConfig:", m)
 		miningRigs = append(miningRigs, Rig{m.Name, gpio.NewRelayDriver(r, m.Pin), m.IP, m.Info})
 	}
@@ -24,20 +24,23 @@ func main() {
 	log.Notice("Configured rigs: ", len(miningRigs))
 
 	//Logging machines in two outputs - console & external file
-	if configFile.Log {
-		LogMachines()
+	if Config.Log {
+		go LogMachines()
 	}
 
+	if Config.TgBotActivate {
+		go TelegramBot(miningRigs)
+	}
 	//Gobot work func
 	work := func() {
 		log.Notice("HELLO! I WILL KEEP YOUR MINING RIGS ONLINE!")
 
 		//Check machines on startup without waiting the timer. Use with caution. After a power failure, RPI could be ready faster than your machines and start restarting them without need.
-		if configFile.StartupCheck {
+		if Config.StartupCheck {
 			CheckMachines(miningRigs)
 		}
 
-		timer := time.Duration(configFile.WaitSeconds) * time.Second
+		timer := time.Duration(Config.WaitSeconds) * time.Second
 		log.Notice("Starting timer: ", timer)
 
 		//Check the machines periodically

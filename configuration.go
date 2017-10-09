@@ -17,19 +17,25 @@ type MinerConfig struct {
 
 //ConfigurationFile struct to parse config.json
 type ConfigurationFile struct {
-	WaitSeconds  int           // Period of the timer checks in seconds
-	StartupCheck bool          // Check miners on startup
-	Log          bool          //Enable or disable logging
-	Miners       []MinerConfig // An array of the
+	WaitSeconds     int           // Period of the timer checks in seconds
+	StartupCheck    bool          // Check miners on startup
+	Log             bool          //Enable or disable logging
+	TgBotActivate   bool          //Enable or disable Telegram bot
+	TgAPIKey        string        //Telegram Api key for bot communicationg
+	TgAdminUserName string        //Telegram Username which will control the bot
+	Miners          []MinerConfig // An array of the
 }
+
+//Config is the global Config variable
+var Config ConfigurationFile
 
 //ReadConfig - read and parse the config file
 func ReadConfig() (configFile ConfigurationFile) {
 	//get binary dir
 	//os.Args doesn't work the way we want with "go run". You can use next line
 	//for local dev, but use the original for production.
-	//dir, err := filepath.Abs("./")
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	dir, err := filepath.Abs("./")
+	//dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		log.Fatal(err)
 	}
