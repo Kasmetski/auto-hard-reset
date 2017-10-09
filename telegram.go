@@ -69,7 +69,8 @@ func TelegramBot(rigs []Rig) {
 
 //handleConfig return string with raw data from config file
 func handleConfig() string {
-	return fmt.Sprintf("Config:\n%+v", Config)
+	return fmt.Sprintf("Config:\nLogging: %t\nStartupcheck: %t\nTimer: %d\nMiners:\n%+v",
+		Config.Log, Config.StartupCheck, Config.WaitSeconds, Config.Miners)
 }
 
 //handlePing return information about the ping response from machine
