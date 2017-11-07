@@ -34,7 +34,7 @@ func CheckMachines(r []Rig) {
 //Ping IP from Linux shell
 func (r *Rig) Ping() bool {
 	out, _ := exec.Command("ping", r.ip, "-c 3", "-i 3", "-w 10").Output()
-	if strings.Contains(string(out), "Host Unreachable") {
+	if strings.Contains(string(out), "100% packet loss") {
 		log.Error("HOST NOT FOUND: ", r.name, r.ip)
 		return false
 	}
