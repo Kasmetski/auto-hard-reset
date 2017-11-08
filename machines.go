@@ -62,7 +62,7 @@ func (r *Rig) Restarter() {
 	log.Warning("Restarting: ", r.name)
 	if Config.RemoteNotify {
 		if Config.Pushover {
-			Notify(r)
+			PushoverNotify(r)
 		}
 	}
 

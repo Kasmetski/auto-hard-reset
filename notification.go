@@ -6,8 +6,8 @@ import (
 	"github.com/gokyle/gopush/pushover"
 )
 
-//Notify using Pushover notification
-func Notify(r *Rig) {
+//PushoverNotify using Pushover notification
+func PushoverNotify(r *Rig) {
 	identity := pushover.Authenticate(
 		Config.PushoverToken,
 		Config.PushoverUser,
