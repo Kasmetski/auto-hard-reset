@@ -20,6 +20,7 @@ type ConfigurationFile struct {
 	WaitSeconds     int           // Period of the timer checks in seconds
 	StartupCheck    bool          // Check miners on startup
 	Log             bool          //Enable or disable logging
+	RemoteNotify    bool          //Remote notification telegram,pushover & etc
 	TgBotActivate   bool          //Enable or disable Telegram bot
 	TgAPIKey        string        //Telegram Api key for bot communicationg
 	TgAdminUserName string        //Telegram Username which will control the bot

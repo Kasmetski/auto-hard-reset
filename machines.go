@@ -60,8 +60,11 @@ func (r *Rig) TurnOn() {
 //Restarter function logic
 func (r *Rig) Restarter() {
 	log.Warning("Restarting: ", r.name)
-
-	Notify(r)
+	if Config.RemoteNotify {
+		if Config.Pushover {
+			Notify(r)
+		}
+	}
 
 	r.ForceShutDown()
 	time.Sleep(5 * time.Second)
