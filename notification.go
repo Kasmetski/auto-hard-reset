@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"bitbucket.org/kisom/gopush/pushover"
+	"github.com/gokyle/gopush/pushover"
 )
 
 //Notify using Pushover notification
