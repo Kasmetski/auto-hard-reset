@@ -23,6 +23,9 @@ type ConfigurationFile struct {
 	TgBotActivate   bool          //Enable or disable Telegram bot
 	TgAPIKey        string        //Telegram Api key for bot communicationg
 	TgAdminUserName string        //Telegram Username which will control the bot
+	Pushover        bool          //Enable or disable Pushover notifications
+	PushoverToken   string        //Pushover access token
+	PushoverUser    string        //Pushover user token
 	Miners          []MinerConfig // An array of the
 }
 
@@ -58,6 +61,12 @@ func ReadConfig() (configFile ConfigurationFile) {
 
 	log.Notice("Timer (time in seconds):", configFile.WaitSeconds)
 	log.Notice("Found miner configurations:", len(configFile.Miners))
+
+	if configFile.Pushover == true {
+		log.Notice("Pushover notification is ENABLED")
+		log.Notice("Pushover Token:", configFile.PushoverToken)
+		log.Notice("Pushover User:", configFile.PushoverUser)
+	}
 
 	return
 }

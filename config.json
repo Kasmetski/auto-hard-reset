@@ -5,6 +5,9 @@
     "TgBotActivate" : false,
     "TgAPIKey" : "API-KEY",
     "TgAdminUserName" : "USERNAME",
+    "Pushover": false,
+    "PushoverToken": "your access token",
+    "PushoverUser": "your user token",
     "Miners": [
         {   "Name": "machine 0", "Pin": "40", "Ip": "192.168.0.100", "Info": "R9 290's"  },    
         {   "Name": "machine 1", "Pin": "38", "Ip": "192.168.0.101", "Info": "RX480's"   },    

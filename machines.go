@@ -61,6 +61,8 @@ func (r *Rig) TurnOn() {
 func (r *Rig) Restarter() {
 	log.Warning("Restarting: ", r.name)
 
+	Notify(r)
+
 	r.ForceShutDown()
 	time.Sleep(5 * time.Second)
 	r.TurnOn()

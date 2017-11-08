@@ -37,9 +37,12 @@ Example config.json:
     "WaitSeconds": 1800, //time in seconds 
     "StartupCheck" : true, //check miners on program startup
     "Log" : true, //If you want output log - true
+    "Pushover": false, //true if you want notifications over Pushover app
+    "PushoverToken": "your access token",
+    "PushoverUser": "your user token",
     "Miners": [
-        {   "Name": "machine 1", "Pin": "40", "Ip": "192.168.0.100", "Info": "R9 290's"  },
-        {   "Name": "machine 2", "Pin": "38", "Ip": "192.168.0.101", "Info": "RX480's"   }
+        {   "Name": "machine 1", "Pin": "40", "Ip": "192.168.0.100", "Info": "R9 290's"  },    
+        {   "Name": "machine 2", "Pin": "38", "Ip": "192.168.0.101", "Info": "RX480's"   }      
     ]
 }
 ```
