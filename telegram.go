@@ -22,6 +22,8 @@ func TelegramBot(rigs []Rig) {
 	time.Sleep(time.Millisecond * 500)
 	updates.Clear()
 
+	tgbotapi.NewMessageToChannel(Config.TgAdminUserName, "TEST MSG")
+
 	for update := range updates {
 		if update.Message == nil {
 			continue
@@ -51,6 +53,7 @@ func TelegramBot(rigs []Rig) {
 
 				case "restart":
 					msg.Text = handleRestart(rigs, commandArgs)
+
 				case "turnon":
 					msg.Text = handleTurnOn(rigs, commandArgs)
 
@@ -76,8 +79,12 @@ func handleConfig() string {
 //handlePing return information about the ping response from machine
 func handlePing(rigs []Rig, commandArgs string) (s string) {
 	if commandArgs != "" {
-		args, _ := strconv.ParseInt(commandArgs, 10, 8)
-		s = fmt.Sprintf("Machine online status: %t", rigs[args].Ping())
+		args, _ := strconv.ParseInt(commandArgs, 10, 0)
+		if args >= int64(len(Config.Miners)) || args < 0 {
+			s = "Invalid number"
+		} else {
+			s = fmt.Sprintf("Machine online status: %t", rigs[args].Ping())
+		}
 	} else {
 		s = "Provide arguments"
 	}
@@ -88,9 +95,13 @@ func handlePing(rigs []Rig, commandArgs string) (s string) {
 //handleRestart restarts the machine and returns string
 func handleRestart(rigs []Rig, commandArgs string) (s string) {
 	if commandArgs != "" {
-		args, _ := strconv.ParseInt(commandArgs, 10, 8)
-		rigs[args].Restarter()
-		s = fmt.Sprintf("Machine %d was restarted", args)
+		args, _ := strconv.ParseInt(commandArgs, 10, 0)
+		if args >= int64(len(Config.Miners)) || args < 0 {
+			s = "Invalid number"
+		} else {
+			rigs[args].Restarter()
+			s = fmt.Sprintf("Machine %d was restarted", args)
+		}
 	} else {
 		s = "Provide arguments"
 	}
@@ -101,9 +112,13 @@ func handleRestart(rigs []Rig, commandArgs string) (s string) {
 //handleTurnOn turns on the machine and returns string
 func handleTurnOn(rigs []Rig, commandArgs string) (s string) {
 	if commandArgs != "" {
-		args, _ := strconv.ParseInt(commandArgs, 10, 8)
-		rigs[args].TurnOn()
-		s = fmt.Sprintf("Machine %d was turnedoff", args)
+		args, _ := strconv.ParseInt(commandArgs, 10, 0)
+		if args >= int64(len(Config.Miners)) || args < 0 {
+			s = "Invalid number"
+		} else {
+			rigs[args].TurnOn()
+			s = fmt.Sprintf("TURN ON Machine %d", args)
+		}
 	} else {
 		s = "Provide arguments"
 	}
@@ -114,9 +129,13 @@ func handleTurnOn(rigs []Rig, commandArgs string) (s string) {
 //handleTurnOff restarts the machine and returns string
 func handleTurnOff(rigs []Rig, commandArgs string) (s string) {
 	if commandArgs != "" {
-		args, _ := strconv.ParseInt(commandArgs, 10, 8)
-		rigs[args].ForceShutDown()
-		s = fmt.Sprintf("Machine %d was turnedoff", args)
+		args, _ := strconv.ParseInt(commandArgs, 10, 0)
+		if args >= int64(len(Config.Miners)) || args < 0 {
+			s = "Invalid number"
+		} else {
+			rigs[args].ForceShutDown()
+			s = fmt.Sprintf("TURN OFF Machine %d", args)
+		}
 	} else {
 		s = "Provide arguments"
 	}

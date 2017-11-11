@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-telegram-bot-api/telegram-bot-api"
 	"gobot.io/x/gobot/drivers/gpio"
 )
 
@@ -60,9 +61,15 @@ func (r *Rig) TurnOn() {
 //Restarter function logic
 func (r *Rig) Restarter() {
 	log.Warning("Restarting: ", r.name)
+
 	if Config.RemoteNotify {
 		if Config.Pushover {
 			PushoverNotify(r)
+		}
+
+		if Config.TgBotActivate {
+			//TODO: telegram notification
+			tgbotapi.NewMessageToChannel(Config.TgAdminUserName, "TEST MSG")
 		}
 	}
 
